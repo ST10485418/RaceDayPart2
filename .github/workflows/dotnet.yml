@@ -1,4 +1,3 @@
-
 name: RaceDay Part 2 CI
 
 on:
@@ -33,4 +32,8 @@ jobs:
         run: dotnet build RaceDay.Api.Tests/RaceDay.Api.Tests.csproj --configuration Release --no-restore
 
       - name: Run automated tests
+        env:
+          Jwt__Key: "RaceDayTestSigningKey-OnlyForAutomatedTests-2026!"
+          Jwt__Issuer: "RaceDay.Tests"
+          Jwt__Audience: "RaceDay.Tests"
         run: dotnet test RaceDay.Api.Tests/RaceDay.Api.Tests.csproj --configuration Release --no-build --logger "console;verbosity=normal"
