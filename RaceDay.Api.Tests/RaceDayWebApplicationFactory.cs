@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,6 @@ namespace RaceDay.Api.Tests
 
         public RaceDayWebApplicationFactory()
         {
-            // Supply test-only JWT settings before the API starts.
             Environment.SetEnvironmentVariable(
                 "Jwt__Key",
                 "RaceDayTestSigningKey-OnlyForAutomatedTests-2026!");
@@ -40,7 +40,7 @@ namespace RaceDay.Api.Tests
             builder.ConfigureAppConfiguration(
                 (context, configuration) =>
                 {
-                    var testSettings =
+                    var settings =
                         new Dictionary<string, string?>
                         {
                             ["Jwt:Key"] =
@@ -49,7 +49,7 @@ namespace RaceDay.Api.Tests
                             ["Jwt:Audience"] = "RaceDay.Tests"
                         };
 
-                    configuration.AddInMemoryCollection(testSettings);
+                    configuration.AddInMemoryCollection(settings);
                 });
 
             builder.ConfigureServices(services =>
