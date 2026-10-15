@@ -1,0 +1,30 @@
+
+name: RaceDay Part 2 CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build and run automated tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build RaceDay solution
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run RaceDay automated tests
+        run: dotnet test --configuration Release --no-build --logger "console;verbosity=normal"
